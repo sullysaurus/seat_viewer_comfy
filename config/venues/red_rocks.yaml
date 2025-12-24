@@ -1,0 +1,74 @@
+venue:
+  id: "red_rocks"
+  name: "Red Rocks Amphitheater"
+  type: "amphitheater"
+  location: "Morrison, Colorado"
+
+coordinates:
+  csv_path: "data/red_rocks_coordinates.csv"
+  stage_position:
+    x: 1850
+    y: 600
+  row_range:
+    min: 1
+    max: 70
+
+reference_images:
+  - path: "photos/red_rocks/back-left-center.jpg"
+    position:
+      row: 50
+      angle: -15
+    description: "Upper rows, left-center view"
+
+  - path: "photos/red_rocks/back-left.jpg"
+    position:
+      row: 55
+      angle: -45
+    description: "Upper rows, far left view"
+
+  - path: "photos/red_rocks/back-right-center.jpg"
+    position:
+      row: 50
+      angle: 15
+    description: "Upper rows, right-center view"
+
+  - path: "photos/red_rocks/back-right.jpg"
+    position:
+      row: 55
+      angle: 45
+    description: "Upper rows, far right view"
+
+  - path: "photos/red_rocks/general-admission.jpg"
+    position:
+      row: 70
+      angle: 0
+    description: "GA area, highest/furthest view"
+
+prompts:
+  base: "Red Rocks Amphitheater concert venue, Colorado"
+
+  elements:
+    - "red sandstone rock formations on sides"
+    - "two brick towers with flame torches on top"
+    - "metal stage canopy roof structure"
+    - "jumbotron LED screens flanking the stage"
+    - "tiered stone bench seating"
+    - "Colorado mountain vista backdrop"
+    - "evening dusk lighting, golden hour atmosphere"
+
+  negative: "blurry, low quality, cartoon, illustration, painting, drawing, daytime harsh lighting, empty black sky, distorted, deformed, ugly, watermark, text, indoor venue"
+
+  distance_descriptions:
+    front: "close to stage, intimate view, looking up at performers"
+    middle: "mid-distance from stage, balanced view of stage and surroundings"
+    back: "far from stage, elevated panoramic view, can see entire venue"
+
+  angle_descriptions:
+    left: "angled view from the left side, left rock formation prominent"
+    center: "straight-on center view of stage"
+    right: "angled view from the right side, right rock formation prominent"
+
+output:
+  width: 1920
+  height: 640
+  format: "panoramic"

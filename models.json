@@ -1,0 +1,733 @@
+{
+  "depth_estimation_models": {
+    "depth_anything_series": {
+      "depth_anything_v3": {
+        "versions": [
+          {
+            "name": "DA3-Small",
+            "parameters": "80M",
+            "features": ["Fast", "Good quality"],
+            "sky_segmentation": false,
+            "camera_conditioning": true,
+            "multi_view_attention": true
+          },
+          {
+            "name": "DA3-Base",
+            "parameters": "220M",
+            "features": ["Balanced quality and speed"],
+            "sky_segmentation": false,
+            "camera_conditioning": true,
+            "multi_view_attention": true
+          },
+          {
+            "name": "DA3-Large",
+            "parameters": "350M",
+            "features": ["High quality", "Balanced"],
+            "sky_segmentation": false,
+            "camera_conditioning": true,
+            "multi_view_attention": true
+          },
+          {
+            "name": "DA3-Giant",
+            "parameters": "1.15B",
+            "features": ["Best quality", "Slower"],
+            "sky_segmentation": false,
+            "camera_conditioning": true,
+            "multi_view_attention": true
+          },
+          {
+            "name": "DA3Mono-Large",
+            "parameters": "350M",
+            "features": ["Optimized for monocular depth"],
+            "sky_segmentation": true,
+            "camera_conditioning": false,
+            "multi_view_attention": false
+          },
+          {
+            "name": "DA3Metric-Large",
+            "parameters": "350M",
+            "features": ["Metric depth estimation"],
+            "sky_segmentation": true,
+            "camera_conditioning": false,
+            "multi_view_attention": false
+          },
+          {
+            "name": "DA3Nested-Giant-Large",
+            "parameters": "1.4B",
+            "features": ["Combined model with metric scaling"],
+            "sky_segmentation": true,
+            "camera_conditioning": true,
+            "multi_view_attention": true,
+            "ray_maps": true,
+            "gaussian_splats": true
+          }
+        ],
+        "normalization_modes": ["Standard", "V2-Style (best for ControlNet)", "Raw"],
+        "outputs": ["depth", "confidence", "ray_origin", "ray_direction", "extrinsics", "intrinsics", "sky_mask"],
+        "custom_nodes": [
+          "ComfyUI-DepthAnythingV3 (PozzettiAndrea)",
+          "ComfyUI-DepthAnythingV3-TBG (Ltamann)",
+          "comfyui-depthanythingv3 (itsumoe)"
+        ],
+        "storage_path": "ComfyUI/models/depthanything3/",
+        "published": "2024-11-14",
+        "repository": "ByteDance-Seed/Depth-Anything-3"
+      },
+      "depth_anything_v2": {
+        "versions": [
+          {
+            "name": "depth_anything_v2_vits",
+            "size": "Small",
+            "description": "Fastest, good for real-time"
+          },
+          {
+            "name": "depth_anything_v2_vitb",
+            "size": "Base",
+            "description": "Balanced performance"
+          },
+          {
+            "name": "depth_anything_v2_vitl",
+            "size": "Large",
+            "description": "Best quality"
+          },
+          {
+            "name": "depth_anything_v2_metric_indoor",
+            "size": "Metric",
+            "description": "Indoor metric depth"
+          },
+          {
+            "name": "depth_anything_v2_metric_outdoor",
+            "size": "Metric",
+            "description": "Outdoor metric depth"
+          }
+        ],
+        "features": [
+          "Fine-grained depth details",
+          "Robust across scenes",
+          "Faster than V1",
+          "Better than Marigold and Geowizard"
+        ],
+        "custom_nodes": [
+          "ComfyUI-DepthAnythingV2 (kijai)",
+          "ComfyUI-Depth-Anything-Tensorrt (TensorRT acceleration, up to 14x faster)"
+        ],
+        "storage_path": "ComfyUI/models/depthanything/",
+        "repository": "depth-anything/Depth-Anything-V2"
+      },
+      "depth_anything_v1": {
+        "versions": [
+          {
+            "name": "depth_anything_vits14",
+            "size": "Small",
+            "parameters": "ViT-S/14"
+          },
+          {
+            "name": "depth_anything_vitb14",
+            "size": "Base",
+            "parameters": "ViT-B/14"
+          },
+          {
+            "name": "depth_anything_vitl14",
+            "size": "Large",
+            "parameters": "ViT-L/14"
+          }
+        ],
+        "repository": "LiheYoung/Depth-Anything",
+        "available_in": "comfyui_controlnet_aux preprocessors"
+      }
+    },
+    "midas": {
+      "versions": [
+        {
+          "name": "dpt_beit_large_512",
+          "description": "Trained on 512x512, VRAM hungry, best quality",
+          "input_size": "512x512"
+        },
+        {
+          "name": "dpt_beit_large_384",
+          "description": "High quality, 384 resolution"
+        },
+        {
+          "name": "dpt_large_384",
+          "description": "DPT Large model"
+        },
+        {
+          "name": "dpt_hybrid_384",
+          "description": "Hybrid architecture",
+          "model_file": "dpt_hybrid-midas-501f0c75.pt"
+        },
+        {
+          "name": "midas_v21",
+          "description": "MiDaS v2.1"
+        },
+        {
+          "name": "midas_v21_small",
+          "description": "Lightweight version"
+        }
+      ],
+      "features": [
+        "Well-established",
+        "Multiple model sizes",
+        "CPU/GPU support",
+        "Depth inversion option"
+      ],
+      "repository": "isl-org/MiDaS",
+      "storage_path": "ComfyUI/models/midas/",
+      "available_in": [
+        "comfyui_controlnet_aux",
+        "was-node-suite-comfyui"
+      ]
+    },
+    "zoedepth": {
+      "versions": [
+        {
+          "name": "ZoeD_N",
+          "description": "NYU-Depth trained model"
+        },
+        {
+          "name": "ZoeD_K",
+          "description": "KITTI trained model"
+        },
+        {
+          "name": "ZoeD_NK",
+          "description": "Multi-headed model (NYU + KITTI)"
+        }
+      ],
+      "features": [
+        "Metric depth estimation",
+        "Zero-shot transfer",
+        "Combines relative and metric depth"
+      ],
+      "repository": "isl-org/ZoeDepth",
+      "available_in": "comfyui_controlnet_aux",
+      "paper": "ZoeDepth: Zero-shot Transfer by Combining Relative and Metric Depth (2023)"
+    },
+    "marigold": {
+      "description": "Diffusion-based depth estimation",
+      "features": [
+        "Repurposes diffusion models",
+        "High quality depth maps",
+        "Slower than other methods"
+      ],
+      "custom_nodes": "ComfyUI-Marigold (kijai)",
+      "storage_paths": [
+        "ComfyUI/custom_nodes/ComfyUI-Marigold/checkpoints",
+        "ComfyUI/models/diffusers"
+      ],
+      "repository": "Bingxin/Marigold",
+      "paper": "Repurposing Diffusion-Based Image Generators for Monocular Depth Estimation (2023)"
+    },
+    "leres": {
+      "model": "res101",
+      "description": "AdelaiDepth LeReS model",
+      "repository": "AdelaiDepth/LeReS",
+      "storage_path": "ComfyUI/models/leres/"
+    },
+    "other_depth_models": [
+      {
+        "name": "DepthFM",
+        "description": "Used with SD3.5 Large Depth ControlNet",
+        "use_case": "Architectural rendering, 3D asset texturing"
+      },
+      {
+        "name": "Diffusion-Edge",
+        "variants": ["indoor", "urban", "natural"],
+        "repository": "hr16/Diffusion-Edge"
+      },
+      {
+        "name": "UniMatch",
+        "description": "Optical flow-based depth",
+        "repository": "hr16/Unimatch"
+      }
+    ]
+  },
+  "controlnet_models": {
+    "flux": {
+      "xlabs_ai": [
+        {
+          "name": "flux-canny-controlnet-v3",
+          "type": "Canny",
+          "resolution": "1024x1024",
+          "description": "Edge detection control",
+          "repository": "XLabs-AI/flux-controlnet-collections"
+        },
+        {
+          "name": "flux-depth-controlnet-v3",
+          "type": "Depth",
+          "resolution": "1024x1024",
+          "description": "Depth map control",
+          "repository": "XLabs-AI/flux-controlnet-collections"
+        },
+        {
+          "name": "flux-hed-controlnet-v3",
+          "type": "HED",
+          "resolution": "1024x1024",
+          "description": "Holistically-Nested Edge Detection",
+          "repository": "XLabs-AI/flux-controlnet-collections"
+        }
+      ],
+      "instantx": [
+        {
+          "name": "FLUX.1-dev-Controlnet-Union",
+          "type": "Union (All-in-One)",
+          "modes": ["canny", "tile", "depth", "blur", "pose", "gray", "low_quality"],
+          "description": "Multi-mode ControlNet supporting multiple control types",
+          "repository": "InstantX/FLUX.1-dev-Controlnet-Union",
+          "notes": "Beta version, some modes may have lower effectiveness"
+        },
+        {
+          "name": "FLUX.1-dev-Controlnet-Canny",
+          "type": "Canny",
+          "training": "Multi-scale 1024x1024, batch 8x8, 30k steps",
+          "description": "Specialized Canny edge detection model",
+          "repository": "InstantX/FLUX.1-dev-Controlnet-Canny"
+        },
+        {
+          "name": "FLUX.1-dev-Controlnet-Union-Pro",
+          "type": "Union Pro",
+          "modes": ["canny", "tile", "depth", "blur", "pose", "gray", "low_quality", "tile_super", "tile_deblur", "inpaint"],
+          "description": "Advanced Union model with additional editing features",
+          "repository": "InstantX/FLUX.1-dev-Controlnet-Union-Pro"
+        }
+      ],
+      "black_forest_labs": [
+        {
+          "name": "flux1-canny-dev",
+          "type": "Canny",
+          "parameters": "12B",
+          "description": "Official Flux.1 Canny ControlNet",
+          "repository": "black-forest-labs/FLUX.1-Canny-dev"
+        },
+        {
+          "name": "flux1-depth-dev-lora",
+          "type": "Depth (LoRA)",
+          "parameters": "12B",
+          "description": "Official Flux.1 Depth ControlNet as LoRA",
+          "repository": "black-forest-labs/FLUX.1-Depth-dev"
+        }
+      ],
+      "jasperai": [
+        {
+          "name": "Flux.1-dev Surface Normals",
+          "type": "Surface Normals",
+          "description": "Surface normal map control",
+          "repository": "Jasperai/Flux.1-dev-Controlnet-Surface-Normals"
+        },
+        {
+          "name": "Flux.1-dev Depth",
+          "type": "Depth",
+          "description": "Depth map control",
+          "repository": "Jasperai/Flux.1-dev-Controlnet-Depth"
+        },
+        {
+          "name": "Flux.1-dev Upscaler",
+          "type": "Super-resolution",
+          "description": "High-quality upscaling control",
+          "repository": "Jasperai/Flux.1-dev-Controlnet-Upscaler"
+        }
+      ]
+    },
+    "sdxl": {
+      "stability_ai_official": [
+        {
+          "name": "sd3.5_large_controlnet_blur",
+          "type": "Blur",
+          "parameters": "8B",
+          "description": "Ultra-high resolution upscaling (8K-16K)",
+          "repository": "stabilityai/stable-diffusion-3.5-controlnets",
+          "model": "SD3.5 Large"
+        },
+        {
+          "name": "sd3.5_large_controlnet_canny",
+          "type": "Canny",
+          "parameters": "8B",
+          "description": "Canny edge map structure control",
+          "repository": "stabilityai/stable-diffusion-3.5-controlnets",
+          "model": "SD3.5 Large"
+        },
+        {
+          "name": "sd3.5_large_controlnet_depth",
+          "type": "Depth",
+          "parameters": "8B",
+          "description": "DepthFM depth map guidance",
+          "repository": "stabilityai/stable-diffusion-3.5-controlnets",
+          "model": "SD3.5 Large"
+        }
+      ],
+      "xinsir_union": [
+        {
+          "name": "controlnet-union-sdxl-1.0",
+          "type": "Union",
+          "modes": ["canny", "openpose", "depth", "lineart", "mlsd", "scribble", "hed", "pidi", "teed", "segment", "normal"],
+          "description": "All-in-one SDXL ControlNet",
+          "repository": "xinsir/controlnet-union-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-union-sdxl-1.0-promax",
+          "type": "Union ProMax",
+          "modes": ["canny", "openpose", "depth", "lineart", "mlsd", "scribble", "hed", "pidi", "teed", "segment", "normal", "tile_variation", "tile_deblur", "tile_super", "inpaint"],
+          "description": "Enhanced Union with tile and inpaint features",
+          "repository": "xinsir/controlnet-union-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-canny-sdxl-1.0",
+          "type": "Canny",
+          "repository": "xinsir/controlnet-canny-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-depth-sdxl-1.0",
+          "type": "Depth",
+          "repository": "xinsir/controlnet-depth-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-openpose-sdxl-1.0",
+          "type": "OpenPose",
+          "repository": "xinsir/controlnet-openpose-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-scribble-sdxl-1.0",
+          "type": "Scribble",
+          "repository": "xinsir/controlnet-scribble-sdxl-1.0"
+        }
+      ],
+      "bdsqlsz": [
+        {
+          "name": "qinglong_controlnet-lllite canny",
+          "type": "Canny",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite depth",
+          "type": "Depth",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite lineart-anime",
+          "type": "Lineart Anime",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite mlsd",
+          "type": "MLSD",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite normal",
+          "type": "Normal Map",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite openpose",
+          "type": "OpenPose",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite recolor",
+          "type": "Recolor",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite segment",
+          "type": "Segmentation",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite sketch",
+          "type": "Sketch",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite softedge",
+          "type": "Soft Edge",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        },
+        {
+          "name": "qinglong_controlnet-lllite tile",
+          "type": "Tile",
+          "repository": "bdsqlsz/qinglong_controlnet-lllite"
+        }
+      ],
+      "diffusers": [
+        {
+          "name": "controlnet-canny-sdxl-1.0",
+          "type": "Canny",
+          "variants": ["small", "mid", "full"],
+          "repository": "diffusers/controlnet-canny-sdxl-1.0"
+        },
+        {
+          "name": "controlnet-depth-sdxl-1.0",
+          "type": "Depth",
+          "variants": ["small", "mid", "full", "zoe"],
+          "repository": "diffusers/controlnet-depth-sdxl-1.0"
+        }
+      ],
+      "briaai": [
+        {
+          "name": "BRIA-2.3-ControlNet-BG-Gen",
+          "type": "Background Generation",
+          "repository": "briaai/BRIA-2.3-ControlNet-BG-Gen"
+        },
+        {
+          "name": "BRIA-2.3-ControlNet-Canny",
+          "type": "Canny",
+          "repository": "briaai/BRIA-2.3-ControlNet-Canny"
+        },
+        {
+          "name": "BRIA-2.3-ControlNet-Depth",
+          "type": "Depth",
+          "repository": "briaai/BRIA-2.3-ControlNet-Depth"
+        },
+        {
+          "name": "BRIA-2.3-ControlNet-Recolor",
+          "type": "Recolor",
+          "repository": "briaai/BRIA-2.3-ControlNet-Recolor"
+        }
+      ],
+      "other_authors": [
+        {
+          "author": "destitech",
+          "models": ["inpaint", "inpaintv2"],
+          "type": "Inpainting"
+        },
+        {
+          "author": "EcomXL",
+          "models": ["inpaint", "softedge"],
+          "repository": "alimama-creative/EcomXL_controlnet"
+        },
+        {
+          "author": "Hetaneko",
+          "models": ["pony-canny", "pony-cannyv2", "pony-color", "pony-depth", "pony-replicate", "pony-replicatev2"],
+          "type": "Pony Diffusion variants"
+        },
+        {
+          "author": "h94",
+          "models": ["ip-adapter", "ip-adapter-vith", "ip-adapter-plus", "ip-adapter-plus-face"],
+          "type": "IP-Adapter models"
+        },
+        {
+          "author": "lllyasviel",
+          "repository": "lllyasviel/sd_control_collection",
+          "description": "Community SDXL ControlNet collection"
+        }
+      ]
+    },
+    "sd15_sd20": {
+      "lllyasviel_official_v11": [
+        {
+          "name": "control_v11p_sd15_canny",
+          "type": "Canny",
+          "description": "Precise line and edge detection"
+        },
+        {
+          "name": "control_v11f1p_sd15_depth",
+          "type": "Depth",
+          "description": "Depth map control"
+        },
+        {
+          "name": "control_v11p_sd15_openpose",
+          "type": "OpenPose",
+          "description": "Human pose control"
+        },
+        {
+          "name": "control_v11p_sd15_mlsd",
+          "type": "MLSD",
+          "description": "Straight line detection for architecture"
+        },
+        {
+          "name": "control_v11p_sd15_scribble",
+          "type": "Scribble",
+          "description": "Rough sketch control"
+        },
+        {
+          "name": "control_v11p_sd15_softedge",
+          "type": "Soft Edge (HED/PIDI)",
+          "description": "Soft edge detection"
+        },
+        {
+          "name": "control_v11p_sd15_lineart",
+          "type": "Lineart",
+          "description": "Line art detection"
+        },
+        {
+          "name": "control_v11p_sd15_lineart_anime",
+          "type": "Lineart Anime",
+          "description": "Anime-style line extraction"
+        },
+        {
+          "name": "control_v11p_sd15_normalbae",
+          "type": "Normal Map",
+          "description": "Surface normal control"
+        },
+        {
+          "name": "control_v11p_sd15_seg",
+          "type": "Segmentation",
+          "description": "Semantic segmentation"
+        },
+        {
+          "name": "control_v11f1e_sd15_tile",
+          "type": "Tile",
+          "description": "Texture and detail preservation"
+        },
+        {
+          "name": "control_v11e_sd15_shuffle",
+          "type": "Shuffle",
+          "description": "Color shuffle control"
+        },
+        {
+          "name": "control_v11e_sd15_ip2p",
+          "type": "InstructPix2Pix",
+          "description": "Instruction-based editing"
+        },
+        {
+          "name": "control_v11p_sd15_inpaint",
+          "type": "Inpaint",
+          "description": "Inpainting control"
+        }
+      ]
+    }
+  },
+  "base_models": {
+    "flux": [
+      {
+        "name": "flux1-dev",
+        "type": "Base Model",
+        "parameters": "12B",
+        "repository": "black-forest-labs/FLUX.1-dev"
+      },
+      {
+        "name": "flux1-schnell",
+        "type": "Fast Model (4-step distilled)",
+        "parameters": "12B",
+        "repository": "black-forest-labs/FLUX.1-schnell"
+      },
+      {
+        "name": "flux1-fill-dev",
+        "type": "Inpainting Model",
+        "repository": "black-forest-labs/FLUX.1-Fill-dev"
+      },
+      {
+        "name": "flux1-kontext-dev",
+        "type": "Context Model",
+        "repository": "black-forest-labs/FLUX.1-Kontext-dev"
+      }
+    ],
+    "sdxl": [
+      {
+        "name": "SDXL 1.0 Base",
+        "type": "Base Model",
+        "resolution": "1024x1024",
+        "repository": "stabilityai/stable-diffusion-xl-base-1.0"
+      },
+      {
+        "name": "SDXL 1.0 Refiner",
+        "type": "Refiner Model",
+        "repository": "stabilityai/stable-diffusion-xl-refiner-1.0"
+      },
+      {
+        "name": "SD 3.5 Large",
+        "type": "Latest Generation",
+        "parameters": "8B",
+        "repository": "stabilityai/stable-diffusion-3.5-large"
+      },
+      {
+        "name": "SD 3.5 Medium",
+        "type": "Medium Size",
+        "parameters": "2B",
+        "repository": "stabilityai/stable-diffusion-3.5-medium"
+      }
+    ]
+  },
+  "installation_paths": {
+    "controlnet_models": "ComfyUI/models/controlnet",
+    "xlabs_controlnet": "ComfyUI/models/xlabs/controlnets",
+    "checkpoints": "ComfyUI/models/checkpoints",
+    "diffusion_models": "ComfyUI/models/diffusion_models",
+    "loras": "ComfyUI/models/loras",
+    "text_encoders": "ComfyUI/models/text_encoders",
+    "vae": "ComfyUI/models/vae",
+    "depth_anything_v2": "ComfyUI/models/depthanything",
+    "depth_anything_v3": "ComfyUI/models/depthanything3",
+    "midas": "ComfyUI/models/midas",
+    "leres": "ComfyUI/models/leres",
+    "marigold": "ComfyUI/models/diffusers OR ComfyUI/custom_nodes/ComfyUI-Marigold/checkpoints"
+  },
+  "required_custom_nodes": [
+    {
+      "name": "ComfyUI Manager",
+      "description": "Essential for managing other custom nodes"
+    },
+    {
+      "name": "ComfyUI ControlNet Aux (comfyui_controlnet_aux)",
+      "description": "Preprocessors for ControlNet - includes MiDaS, Depth Anything V1, ZoeDepth",
+      "repository": "Fannovel16/comfyui_controlnet_aux"
+    },
+    {
+      "name": "x-flux-comfyui",
+      "description": "Required for XLabs Flux ControlNet models",
+      "repository": "XLabs-AI/x-flux-comfyui"
+    },
+    {
+      "name": "ComfyUI-DepthAnythingV2",
+      "description": "Depth Anything V2 support",
+      "repository": "kijai/ComfyUI-DepthAnythingV2"
+    },
+    {
+      "name": "ComfyUI-DepthAnythingV3",
+      "description": "Depth Anything V3 with multi-view, point clouds, 3D Gaussians",
+      "repository": "PozzettiAndrea/ComfyUI-DepthAnythingV3"
+    },
+    {
+      "name": "ComfyUI-Marigold",
+      "description": "Marigold diffusion-based depth estimation",
+      "repository": "kijai/ComfyUI-Marigold"
+    },
+    {
+      "name": "ComfyUI-Depth-Anything-Tensorrt",
+      "description": "TensorRT acceleration for Depth Anything (up to 14x faster)",
+      "repository": "yuvraj108c/ComfyUI-Depth-Anything-Tensorrt"
+    }
+  ],
+  "preprocessor_types": {
+    "edge_detection": ["Canny", "HED", "MLSD", "Soft Edge", "TEED", "Diffusion-Edge"],
+    "depth": [
+      "Depth Anything V3 (all variants)",
+      "Depth Anything V2 (ViT-S/B/L, Metric)",
+      "Depth Anything V1",
+      "MiDaS (DPT-BEiT-Large, DPT-Hybrid, etc)",
+      "ZoeDepth (Zoe_N, Zoe_K, Zoe_NK)",
+      "Marigold",
+      "LeReS",
+      "DepthFM"
+    ],
+    "pose": ["OpenPose", "DWPose", "AnimalPose"],
+    "artistic": ["Lineart", "Lineart Anime", "Scribble", "Manga Line"],
+    "semantic": ["Segmentation", "Normal Map", "Surface Normals"],
+    "enhancement": ["Tile", "Blur", "Recolor", "Inpaint"]
+  },
+  "depth_model_comparison": {
+    "speed_ranking": [
+      "1. Depth Anything V2 (fastest)",
+      "2. MiDaS",
+      "3. ZoeDepth",
+      "4. Depth Anything V3",
+      "5. Marigold (slowest, highest quality)"
+    ],
+    "quality_ranking": [
+      "1. Depth Anything V3 (especially DA3Nested-Giant-Large)",
+      "2. Marigold",
+      "3. Depth Anything V2",
+      "4. ZoeDepth (metric depth)",
+      "5. MiDaS"
+    ],
+    "use_cases": {
+      "real_time": "Depth Anything V2 with TensorRT",
+      "highest_quality": "Depth Anything V3 DA3Nested-Giant-Large or Marigold",
+      "metric_depth": "ZoeDepth, Depth Anything V2 Metric, DA3Metric-Large",
+      "indoor_scenes": "MiDaS DPT-BEiT-Large, Depth Anything V2 Metric Indoor",
+      "outdoor_scenes": "Depth Anything V2 Metric Outdoor",
+      "video_consistency": "Depth Anything V3 Multi-View",
+      "3d_reconstruction": "Depth Anything V3 (with point cloud/Gaussian splat support)",
+      "controlnet_workflow": "Depth Anything V2/V3 with V2-Style normalization"
+    }
+  }
+}
