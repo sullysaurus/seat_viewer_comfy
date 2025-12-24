@@ -144,6 +144,16 @@ def main():
                             )
                             st.session_state.photos = photos
                             st.session_state.downloaded_images = []
+
+                            # Pre-fetch image bytes for display (needed for cloud)
+                            st.session_state.photo_bytes = {}
+                            progress = st.progress(0)
+                            for idx, photo in enumerate(photos):
+                                img_bytes = fetch_image_bytes(photo.image_url, scraper)
+                                if img_bytes:
+                                    st.session_state.photo_bytes[idx] = img_bytes
+                                progress.progress((idx + 1) / len(photos))
+                            progress.empty()
             else:
                 st.info("No sections with photos found")
 
@@ -165,23 +175,22 @@ def main():
 
         # Download all button at top
         col1, col2 = st.columns([1, 3])
+
+        # Use pre-fetched bytes for download
+        photo_bytes = st.session_state.get("photo_bytes", {})
+
         with col1:
-            if st.button("📥 Prepare All for Download", type="primary"):
-                with st.spinner("Downloading all images..."):
-                    downloaded = []
-                    progress = st.progress(0)
+            if photo_bytes and st.button("📥 Prepare All for Download", type="primary"):
+                downloaded = []
+                for idx, photo in enumerate(photos):
+                    if idx in photo_bytes:
+                        safe_venue = "".join(c if c.isalnum() else "_" for c in venue_name)
+                        safe_section = "".join(c if c.isalnum() else "_" for c in photo.section)
+                        filename = f"{safe_venue}_{safe_section}_{idx+1}.jpg"
+                        downloaded.append((filename, photo_bytes[idx]))
 
-                    for idx, photo in enumerate(photos):
-                        image_bytes = fetch_image_bytes(photo.image_url, scraper)
-                        if image_bytes:
-                            safe_venue = "".join(c if c.isalnum() else "_" for c in venue_name)
-                            safe_section = "".join(c if c.isalnum() else "_" for c in photo.section)
-                            filename = f"{safe_venue}_{safe_section}_{idx+1}.jpg"
-                            downloaded.append((filename, image_bytes))
-                        progress.progress((idx + 1) / len(photos))
-
-                    st.session_state.downloaded_images = downloaded
-                    st.success(f"Prepared {len(downloaded)} images!")
+                st.session_state.downloaded_images = downloaded
+                st.success(f"Prepared {len(downloaded)} images!")
 
         # Show download button if images are ready
         if st.session_state.downloaded_images:
@@ -202,12 +211,18 @@ def main():
         # Display photos in grid
         cols = st.columns(3)
 
+        # Get pre-fetched bytes if available
+        photo_bytes = st.session_state.get("photo_bytes", {})
+
         for idx, photo in enumerate(photos):
             col = cols[idx % 3]
 
             with col:
-                # Use use_column_width for compatibility with older Streamlit versions
-                st.image(photo.image_url, use_column_width=True)
+                # Use pre-fetched bytes if available, otherwise try URL
+                if idx in photo_bytes:
+                    st.image(photo_bytes[idx], use_column_width=True)
+                else:
+                    st.image(photo.image_url, use_column_width=True)
 
                 # Photo info
                 info_parts = [f"Section {photo.section}"]
@@ -218,21 +233,19 @@ def main():
 
                 st.caption(" | ".join(info_parts))
 
-                # Individual download button
-                if st.button(f"Download", key=f"dl_{idx}"):
-                    image_bytes = fetch_image_bytes(photo.image_url, scraper)
-                    if image_bytes:
-                        safe_venue = "".join(c if c.isalnum() else "_" for c in venue_name)
-                        safe_section = "".join(c if c.isalnum() else "_" for c in photo.section)
-                        filename = f"{safe_venue}_{safe_section}_{idx+1}.jpg"
+                # Individual download button - use pre-fetched bytes
+                if idx in photo_bytes:
+                    safe_venue = "".join(c if c.isalnum() else "_" for c in venue_name)
+                    safe_section = "".join(c if c.isalnum() else "_" for c in photo.section)
+                    filename = f"{safe_venue}_{safe_section}_{idx+1}.jpg"
 
-                        st.download_button(
-                            label="⬇️ Save",
-                            data=image_bytes,
-                            file_name=filename,
-                            mime="image/jpeg",
-                            key=f"save_{idx}"
-                        )
+                    st.download_button(
+                        label="⬇️ Download",
+                        data=photo_bytes[idx],
+                        file_name=filename,
+                        mime="image/jpeg",
+                        key=f"dl_{idx}"
+                    )
 
     else:
         # Empty state
