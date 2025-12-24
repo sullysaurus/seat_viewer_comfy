@@ -8,7 +8,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List, Tuple
 from urllib.parse import quote_plus
 
 
@@ -64,7 +64,7 @@ class AVFMSScraper:
             print(f"Request failed for {url}: {e}")
             return None
 
-    def search_venues(self, query: str) -> list[dict]:
+    def search_venues(self, query: str) -> List[dict]:
         """
         Search for venues by name.
 
@@ -101,7 +101,7 @@ class AVFMSScraper:
 
         return venues
 
-    def get_venue_sections(self, venue_url: str) -> list[Section]:
+    def get_venue_sections(self, venue_url: str) -> List[Section]:
         """
         Get all sections for a venue.
 
@@ -165,7 +165,7 @@ class AVFMSScraper:
 
         return sections
 
-    def get_section_photos(self, section_url: str, venue_name: str = "", max_photos: int = 20) -> list[SeatPhoto]:
+    def get_section_photos(self, section_url: str, venue_name: str = "", max_photos: int = 20) -> List[SeatPhoto]:
         """
         Get photos from a specific section.
 
@@ -272,7 +272,7 @@ class AVFMSScraper:
             photo_page_url=photo_url
         )
 
-    def _parse_seat_info(self, url: str) -> tuple[str, Optional[str], Optional[str]]:
+    def _parse_seat_info(self, url: str) -> Tuple[str, Optional[str], Optional[str]]:
         """Parse section, row, seat from a photo URL."""
         section = ""
         row = None

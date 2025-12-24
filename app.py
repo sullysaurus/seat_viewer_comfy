@@ -8,6 +8,7 @@ Deployable to Streamlit Cloud.
 import io
 import zipfile
 from datetime import datetime
+from typing import List, Tuple, Optional
 
 import requests
 import streamlit as st
@@ -21,7 +22,7 @@ def get_scraper():
     return AVFMSScraper(delay=0.5)
 
 
-def fetch_image_bytes(url: str, scraper: AVFMSScraper) -> bytes | None:
+def fetch_image_bytes(url: str, scraper: AVFMSScraper) -> Optional[bytes]:
     """Download image and return as bytes."""
     try:
         response = scraper.session.get(url, timeout=30)
@@ -32,7 +33,7 @@ def fetch_image_bytes(url: str, scraper: AVFMSScraper) -> bytes | None:
         return None
 
 
-def create_zip_of_photos(photos: list[tuple[str, bytes]]) -> bytes:
+def create_zip_of_photos(photos: List[Tuple[str, bytes]]) -> bytes:
     """Create a zip file containing all photos."""
     zip_buffer = io.BytesIO()
     with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:
@@ -205,7 +206,8 @@ def main():
             col = cols[idx % 3]
 
             with col:
-                st.image(photo.image_url, use_container_width=True)
+                # Use use_column_width for compatibility with older Streamlit versions
+                st.image(photo.image_url, use_column_width=True)
 
                 # Photo info
                 info_parts = [f"Section {photo.section}"]
